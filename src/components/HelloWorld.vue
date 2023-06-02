@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <p>
-    router已删除!!!!!!!!!!!!!!!!!
+     publicPath:"./",已注释
     </p>
 
 
