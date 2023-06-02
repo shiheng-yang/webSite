@@ -1,7 +1,8 @@
 <template>
   <div class="hello">
+    <h1>{{ msg }}</h1>
     <p>
-     publicPath:"./",已注释
+    哇哈哈哈哈哈!!!!!!!!!
     </p>
 
 
