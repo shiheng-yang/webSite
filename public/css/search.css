@@ -1,0 +1,121 @@
+.about {
+  padding: 0.2rem 0.2rem 0;
+  height: 98%;
+}
+.titles {
+  font-size: 16px;
+  width: 100%;
+}
+.titles input {
+  outline: none;
+  height: 26px !important;
+}
+.titles div {
+  display: inline-block;
+  margin: 2px 0;
+}
+.titles span {
+  float: right;
+  margin-bottom: 10px;
+}
+.azjgs /deep/ .el-select {
+  margin-bottom: 10px;
+}
+.azjgs /deep/ .el-input--suffix {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  width: 174px;
+  margin-right: 6px;
+}
+.azjgs /deep/ .el-input__suffix {
+  display: flex;
+  align-items: center;
+}
+.azjgs /deep/ .el-input--suffix .el-input__inner {
+  height: 32px;
+  padding-right: 0;
+}
+ /deep/ .el-table td,
+ /deep/ .el-table th {
+  text-align: center;
+}
+ /deep/ .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background: #ccc;
+  color: #fff;
+}
+.el-select-dropdown__item.selected,
+.el-select-dropdown__item:hover {
+  color: #fff;
+  background: #409EFF;
+}
+ /deep/ .el-date-editor--daterange.el-input,
+.el-date-editor--daterange.el-input__inner,
+.el-date-editor--timerange.el-input,
+.el-date-editor--timerange.el-input__inner {
+  width: 216px;
+}
+ /deep/ .el-range-editor.el-input__inner {
+  padding: 5px 4px;
+  border: 1px solid #aaa;
+  margin-right: 6px;
+}
+.dialogsC {
+  display: flex;
+  justify-content: center;
+}
+ /deep/ .el-dialog__header {
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+ /deep/ .el-dialog__footer {
+  border-top: 1px solid #ccc;
+}
+ /deep/ .el-dialog--center {
+  border-radius: 10px;
+}
+.deleteP {
+  font-size: 0.3rem;
+}
+ /deep/ .el-dialog--center .el-dialog__body {
+  padding: 10px 0;
+}
+.newDialog {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.newDialog .title {
+  display: grid;
+  justify-items: end;
+  font-size: inherit;
+}
+.newDialog /deep/ .el-select {
+  margin-right: 0;
+}
+.newDialog /deep/ .el-input--suffix {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  width: 174px;
+}
+.newDialog /deep/ .el-input__suffix {
+  display: flex;
+  align-items: center;
+}
+.newDialog /deep/ .el-input--suffix .el-input__inner {
+  height: 32px;
+  padding-right: 0;
+}
+.newDialog /deep/ .el-input {
+  width: 380px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.newDialog /deep/ .el-input.is-disabled .el-input__inner {
+  height: 32px !important;
+  background-color: #eee;
+  color: #aaa;
+}
+.newDialog /deep/ .el-input .el-input__inner {
+  height: 32px !important;
+  width: 100%;
+}
