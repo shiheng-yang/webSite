@@ -6,7 +6,7 @@
       </div>
       <div>
         <h3>后台管理系统</h3>
-        <h5>Medical Monitoring System</h5>
+        <h5>Background Management System</h5>
       </div>
     </div>
     <div class="login_box">
@@ -49,6 +49,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.$store.commit('SYS_USER', this.ruleForm.usename)
           this.$router.push('/Home')
         } else {
           this.ruleForm = {}
@@ -151,6 +152,7 @@ export default {
   display: flex;
   align-items: center;
   transform: translate(-50%, 0%);
+  justify-content: center;
   img {
     width: 66%;
     border-radius: 50%;

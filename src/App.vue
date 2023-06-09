@@ -21,15 +21,15 @@
               <span slot="title">{{ menuItem.name }}</span>
             </el-menu-item>
           </el-submenu> -->
-          <el-menu-item index="/CosmetologyAppUser">
+          <el-menu-item index="/user">
             <i class="el-icon-user-solid"></i>
             <span slot="title">用户管理</span>
           </el-menu-item>
-          <el-menu-item index="/CosmetologyAnalysis">
+          <el-menu-item index="/analysis">
             <i class="el-icon-s-shop"></i>
             <span slot="title">站点分析</span>
           </el-menu-item>
-          <el-menu-item index="/CosmetologyLog">
+          <el-menu-item index="/log">
             <i class="el-icon-s-order"></i>
             <span slot="title">系统日志</span>
           </el-menu-item>
@@ -61,7 +61,6 @@ export default {
     return {
       main: false,
       aside: true,
-      timer: null,
       isCollapse: false,
       collapseClass: 'el-icon-s-fold',
     }
@@ -91,6 +90,8 @@ export default {
   methods: {
     // 退出登录
     logOut() {
+      this.$message.success('退出成功!')
+      this.$store.commit('SYS_USER', '')
       this.$router.push('/SignIn')
     },
     // 折叠/展开侧边栏
@@ -103,6 +104,26 @@ export default {
         this.collapseClass = 'el-icon-s-unfold'
       }
       this.$store.commit('IS_COLLAPSE', this.isCollapse)
+    },
+  },
+  watch: {
+    // 监听路由地址变化
+    $route: {
+      handler(newVal, oldVal) {
+        if (newVal.path == '/SignIn') {
+          this.main = true
+          this.aside = false
+        } else {
+          this.main = false
+          this.aside = true
+          if (newVal.path == '/user' || newVal.path == 'analysis' || newVal.path == 'log') {
+            //没有包含的路由都跳首页
+            this.$router.push(newVal.path)
+          } else {
+            this.$router.push('/Home')
+          }
+        }
+      },
     },
   },
   mounted() {
