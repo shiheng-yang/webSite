@@ -220,6 +220,7 @@ body > .el-container {
     }
   }
   > :last-child {
+    font-weight: bold;
     cursor: pointer;
   }
 }
