@@ -22,6 +22,10 @@ var routes = [
     path: '/Home',
     component: () => import('../views/Home.vue'),
   },
+  {
+    path: '/Table',
+    component: () => import('../views/Table.vue'),
+  },
 ]
 const router = new VueRouter({
   routes,

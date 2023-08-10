@@ -21,9 +21,9 @@
               <span slot="title">{{ menuItem.name }}</span>
             </el-menu-item>
           </el-submenu> -->
-          <el-menu-item index="/user">
+          <el-menu-item index="/Table">
             <i class="el-icon-user-solid"></i>
-            <span slot="title">用户管理</span>
+            <span slot="title">表格</span>
           </el-menu-item>
           <el-menu-item index="/analysis">
             <i class="el-icon-s-shop"></i>
@@ -106,26 +106,26 @@ export default {
       this.$store.commit('IS_COLLAPSE', this.isCollapse)
     },
   },
-  watch: {
-    // 监听路由地址变化
-    $route: {
-      handler(newVal, oldVal) {
-        if (newVal.path == '/SignIn') {
-          this.main = true
-          this.aside = false
-        } else {
-          this.main = false
-          this.aside = true
-          if (newVal.path == '/user' || newVal.path == 'analysis' || newVal.path == 'log') {
-            //没有包含的路由都跳首页
-            this.$router.push(newVal.path)
-          } else {
-            this.$router.push('/Home')
-          }
-        }
-      },
-    },
-  },
+  // watch: {
+  //   // 监听路由地址变化
+  //   $route: {
+  //     handler(newVal, oldVal) {
+  //       if (newVal.path == '/SignIn') {
+  //         this.main = true
+  //         this.aside = false
+  //       } else {
+  //         this.main = false
+  //         this.aside = true
+  //         if (newVal.path == '/user' || newVal.path == 'analysis' || newVal.path == 'log') {
+  //           //没有包含的路由都跳首页
+  //           this.$router.push(newVal.path)
+  //         } else {
+  //           this.$router.push('/Home')
+  //         }
+  //       }
+  //     },
+  //   },
+  // },
   mounted() {
     let defaultMenu = window.location.hash.substr(window.location.hash.indexOf('/'))
     if (defaultMenu == '/') {
