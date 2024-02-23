@@ -1,24 +1,25 @@
-//年月日
-function yearToDay(time) {
-  var y = time.getFullYear(),
-  m = time.getMonth() + 1,
-  d = time.getDate();
-  m = m < 10 ? "0" + m : m;
-  d = d < 10 ? "0" + d : d;
-  return y + "-" + m + "-" + d;
-};
-//年月日时分秒
-function yearToSecond(time) {
-  var h = time.getHours(),
-  i = time.getMinutes(),
-  s = time.getSeconds(),
-  h = h < 10 ? "0" + h : h;
-  i = i < 10 ? "0" + i : i;
-  s = s < 10 ? "0" + s : s;
-  return yearToDay(time) + ' ' + h + ':' + i + ':' + s;
-};
-//年月日补0
-function yearToZero(){
-  return yearToDay(time)+ " 00:00:00"
+export function timesfun(times) {
+  let date = new Date(times)
+  let year = date.getFullYear() //年
+  let month = date.getMonth() + 1 //月
+  let strDate = date.getDate() //日
+  let hours = date.getHours() //时
+  let minits = date.getMinutes() //分
+  let seconds = date.getSeconds() //秒
+  if (month >= 1 && month <= 9) {
+    month = '0' + month
+  }
+  if (strDate >= 0 && strDate <= 9) {
+    strDate = '0' + strDate
+  }
+  if (hours >= 0 && hours <= 9) {
+    hours = '0' + hours
+  }
+  if (minits >= 0 && minits <= 9) {
+    minits = '0' + minits
+  }
+  if (seconds >= 0 && seconds <= 9) {
+    seconds = '0' + seconds
+  }
+  return year + '-' + month + '-' + strDate + ' ' + hours + ':' + minits + ':' + seconds
 }
-export default{yearToSecond,yearToDay,yearToZero}

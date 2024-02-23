@@ -1,14 +1,14 @@
 <template>
   <div class="title azjg">
-    <div v-gxqy>
-      管辖区域：
-      <el-select v-model="cgxqy" placeholder="全部" @change="cxjgmc" clearable filterable>
-        <el-option v-for="(i, n) in $store.state.areas" :key="n" :value="i.id" :label="i.name"></el-option>
+    <div v-if="!user.areaId">
+      区域名称：
+      <el-select ref="selectArea" @visible-change="$visibleChange($event, 'selectArea')" v-model="cgxqy" placeholder="全部" @change="cxjgmc" clearable filterable>
+        <el-option v-for="(i, n) in cgxqyArr" :key="n" :value="i.id" :label="i.name"></el-option>
       </el-select>
     </div>
-    <div v-jgmc>
-      机构名称：
-      <el-select class="devSty" v-model="cjgmc" placeholder="全部" @change="getDatas" clearable filterable>
+    <div v-if="!user.organizationId">
+      采样场所：
+      <el-select ref="selectOrg" @visible-change="$visibleChange($event, 'selectOrg')" class="devSty" v-model="cjgmc" placeholder="全部" @change="getDatas" clearable filterable>
         <el-option v-for="(i, n) in cjgmcArr" :key="n" :value="i.id" :label="i.name"></el-option>
       </el-select>
     </div>
@@ -18,15 +18,17 @@
 export default {
   data() {
     return {
-      cgxqy: '', //查询管辖区域
-      cjgmc: '', //查询机构名称
-      cjgmcArr: [], //查询机构名称数组
-      user: this.$store.state.setAreaOrg, //区域机构id
+      cgxqy: '', //查询区域名称
+      cgxqyArr: JSON.parse(sessionStorage.getItem('gxqylist')), //查询区域名称数组
+      cjgmc: '', //查询采样场所
+      cjgmcArr: [], //查询采样场所数组
+      user: this.$store.state.user,
+      ids: this.$store.state.deviceIds,
     }
   },
   methods: {
-    // 查询机构名称
-    cxjgmc() {
+    // 查询采样场所
+    async cxjgmc(type) {
       this.cjgmc = ''
       this.cjgmcArr = []
       if (!this.cgxqy) {
@@ -36,32 +38,63 @@ export default {
       let params = {
         useFlag: 0,
         areaId: this.cgxqy,
-        pageNo: 1,
-        pageSize: 1000,
-        useFlag: 0,
+        page: 1,
+        pageSize: 10000,
       }
-      organizationQueryWithPage(params).then((data) => {
-        if (data) {
-          this.cjgmcArr = data.records
-          this.$emit('setData', [this.cgxqy])
-        }
-      })
+      // // await organizationQueryWithPage(params).then((data) => {
+      //   if (data) {
+      //     this.cjgmcArr = data.result.records
+      //     if (this.user.organizationId && type != 1) {
+      //       this.cjgmc = this.user.organizationId
+      //       this.getDatas()
+      //       return
+      //     }
+      //     if (!this.ids.length) {
+      //       this.$emit('setData', [this.cgxqy])
+      //     }
+      //   }
+      // })
     },
     // 传两个值
     getDatas() {
-      this.$emit('setData', [this.cgxqy, this.cjgmc])
+      // 实时监控
+      if (this.$route.path == '/GdsMonitor') {
+        let planViewPath = this.cjgmcArr.find((v) => v.id == this.cjgmc).planViewPath
+        planViewPath = this.$VUE_APP_BASE_URL + 'rad/' + planViewPath
+        this.$emit('setData', [this.cgxqy, this.cjgmc, planViewPath])
+      } else {
+        this.$emit('setData', [this.cgxqy, this.cjgmc])
+      }
     },
     // 初始化
-    init() {
-      this.cgxqy = this.user[0]
-      this.cjgmc = this.user[1]
-      if (this.cjgmc) this.$emit('setData', [this.cgxqy, this.cjgmc])
-      if (this.cgxqy && !this.cjgmc) this.cxjgmc()
-      if (!this.cgxqy && !this.cjgmc) this.$emit('setData', ['', ''])
+    async init() {
+      this.cgxqy = this.user.areaId
+      this.cjgmc = this.user.organizationId
+      if (this.$route.path == '/GdsMonitor') {
+        this.cgxqy = this.cgxqyArr[0].id
+        await this.cxjgmc()
+        this.cjgmc = this.cjgmcArr[0].id
+        this.getDatas()
+      } else {
+        // admin
+        if (!this.cgxqy && !this.cjgmc) {
+          this.$emit('setData', ['', ''])
+        } else {
+          // 区域,机构用户
+          this.cxjgmc()
+        }
+      }
     },
   },
   mounted() {
-    this.init()
+    // if (this.ids.length) {
+    //   this.cgxqy = this.ids[0]
+    //   this.cxjgmc(1)
+    //   this.cjgmc = this.ids[1]
+    //   this.getDatas()
+    // } else {
+    //   this.init()
+    // }
     // 清除下拉框
     this.$bus.$on('clickResert', (data) => {
       if (data == 1) {
@@ -69,6 +102,9 @@ export default {
         this.init()
       }
     })
+  },
+  beforeDestroy() {
+    this.$bus.$off('clickResert')
   },
 }
 </script>
@@ -83,32 +119,15 @@ export default {
   }
   div {
     display: inline-block;
-    height: 44px;
-  }
-}
-// 页面中的select
-.azjg {
-  /deep/.el-select {
-    margin-right: 8px;
-  }
-  /deep/.el-input--suffix {
-    border: 1px solid #767676;
-    border-radius: 4px;
-    width: 174px;
-  }
-  /deep/.el-input--suffix .el-input__inner {
-    height: 32px;
   }
 }
 // 下拉框内容背景色
 .el-select-dropdown__item.selected,
 .el-select-dropdown__item:hover {
   color: #fff;
-  background: #409eff;
+  background: #409eff !important;
 }
-.devSty {
-  /deep/.el-input--suffix {
-    min-width: 210px;
-  }
+.el-select-dropdown__item.hover {
+  background: #fff;
 }
 </style>
