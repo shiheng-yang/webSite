@@ -1,6 +1,5 @@
 module.exports = {
   publicPath: './',
-  outputDir: 'radiationDetection',
   // 本地
   devServer: {
     open: true,
