@@ -4,7 +4,7 @@
       <el-aside v-if="aside" width="auto">
         <el-menu router :default-active="routePath" class="el-menu-vertical-demo" background-color="#606266" unique-opened text-color="#fff" :collapse="isCollapse" :mode="mode">
           <div class="left-tittle">
-            <span v-if="!isCollapse" style="white-space: nowrap">后台管理系统</span>
+            <span v-if="!isCollapse" style="white-space: nowrap">12后台管理系统</span>
             <i :class="collapseClass" style="font-size: 28px; cursor: pointer" @click="collapseClk"></i>
           </div>
           <el-menu-item index="/Home">
@@ -22,6 +22,10 @@
           <el-menu-item index="/leaflet2">
             <i class="el-icon-platform-eleme"></i>
             <span slot="title">leaflet2</span>
+          </el-menu-item>
+          <el-menu-item index="/leaflet3">
+            <i class="el-icon-platform-eleme"></i>
+            <span slot="title">leaflet3</span>
           </el-menu-item>
           <!-- <el-submenu :index="subItem.titId" v-for="subItem in $store.state.nav" :key="subItem.titId">
             <template slot="title">
@@ -168,8 +172,8 @@ export default {
           this.main = false
           this.aside = true
           // if (this.$hasRouter(newVal.path)) {
-            //没有包含的路由都跳首页
-            this.$router.push(newVal.path)
+          //没有包含的路由都跳首页
+          this.$router.push(newVal.path)
           // } else {
           //   this.$router.push('/Home')
           // }

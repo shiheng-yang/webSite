@@ -33,6 +33,10 @@ const routes = [
     path: '/leaflet2',
     component: () => import('../views/leaflet2.vue'),
   },
+  {
+    path: '/leaflet3',
+    component: () => import('../views/leaflet3.vue'),
+  },
 ]
 
 const router = new VueRouter({
